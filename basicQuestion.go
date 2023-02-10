@@ -1,6 +1,11 @@
 package qbcli
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
 
 // A basic question. Asks the user something and then calls a
 type Question struct {
@@ -11,8 +16,10 @@ type Question struct {
 
 func (q *Question) Ask() error {
 	fmt.Println(q.question)
-	var answer string = ""
-	_, err := fmt.Scanln(&answer)
+	buffer := bufio.NewReader(os.Stdin)
+	answer, err := buffer.ReadString('\n')
+	answer = strings.ReplaceAll(answer, "\r", "")
+	answer = strings.ReplaceAll(answer, "\n", "")
 	if err != nil {
 		return err
 	}
