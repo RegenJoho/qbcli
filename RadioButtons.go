@@ -23,6 +23,11 @@ func (r *Options) GetName() string {
 	return r.name
 }
 
+func (r *Options) AddOption(option string) *Options {
+	r.options = append(r.options, option)
+	return r
+}
+
 func (r *Options) GetOptions() []string {
 	return r.options
 }
@@ -43,7 +48,7 @@ func (r *Options) Ask() error {
 		if num-1 >= len(r.options) || num < 1 {
 			fmt.Println("Your answer is out of bounds. Please try again.")
 		} else {
-			r.callback(r.options[num-1])
+			r.callback(num - 1)
 			return nil
 		}
 	}
