@@ -7,14 +7,14 @@ import (
 
 type Options struct {
 	options  []string
-	callback QuestionCallback
+	Callback QuestionCallback
 	name     string
 }
 
 func NewOptions(name string, back QuestionCallback, options ...string) *Options {
 	return &Options{
 		name:     name,
-		callback: back,
+		Callback: back,
 		options:  options,
 	}
 }
@@ -48,7 +48,7 @@ func (r *Options) Ask() error {
 		if num-1 >= len(r.options) || num < 1 {
 			fmt.Println("Your answer is out of bounds. Please try again.")
 		} else {
-			r.callback(num - 1)
+			r.Callback(num - 1)
 			return nil
 		}
 	}
