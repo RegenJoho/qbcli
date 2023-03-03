@@ -3,6 +3,8 @@ package qbcli
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/inancgumus/screen"
 )
 
 type Menu struct {
@@ -94,6 +96,10 @@ func (c *Menu) Ask() error {
 		}
 		if shallAllBreak == true {
 			break
+		}
+		if c.shallClear {
+			screen.Clear()
+			screen.MoveTopLeft()
 		}
 		c.choices[num-1].Ask()
 		if c.shallExitImmediatly == true {
