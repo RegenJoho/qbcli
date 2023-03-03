@@ -9,6 +9,7 @@ type Menu struct {
 	choices             []QuestionHandler
 	name, question      string
 	shallExitImmediatly bool
+	shallClear          bool
 }
 
 func NewMenu(name, question string, exitImmediatly bool) *Menu {
@@ -19,6 +20,12 @@ func NewMenu(name, question string, exitImmediatly bool) *Menu {
 		shallExitImmediatly: exitImmediatly,
 	}
 }
+
+func (c *Menu) Clear(shallClear bool) *Menu {
+	c.shallClear = shallClear
+	return c
+}
+
 func NewMenuWithoutQuestion(name string, exitImmediatly bool) *Menu {
 	return NewMenu(name, "", exitImmediatly)
 }

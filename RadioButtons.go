@@ -6,9 +6,10 @@ import (
 )
 
 type Options struct {
-	options  []string
-	Callback QuestionCallback
-	name     string
+	options    []string
+	Callback   QuestionCallback
+	name       string
+	shallClear bool
 }
 
 func NewOptions(name string, back QuestionCallback, options ...string) *Options {
@@ -17,6 +18,11 @@ func NewOptions(name string, back QuestionCallback, options ...string) *Options 
 		Callback: back,
 		options:  options,
 	}
+}
+
+func (r *Options) Clear(shallClear bool) *Options {
+	r.shallClear = shallClear
+	return r
 }
 
 func (r *Options) GetName() string {

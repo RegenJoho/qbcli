@@ -7,8 +7,9 @@ import (
 )
 
 type Command struct {
-	cmd  *exec.Cmd
-	name string
+	cmd        *exec.Cmd
+	name       string
+	shallClear bool
 }
 
 func NewCommand(name, cmmd string, args ...string) *Command {
@@ -20,6 +21,11 @@ func NewCommand(name, cmmd string, args ...string) *Command {
 		name: name,
 		cmd:  command,
 	}
+}
+
+func (c *Command) Clear(shallClear bool) *Command {
+	c.shallClear = shallClear
+	return c
 }
 
 func NewCommandCustom(name string, stin io.Reader, stout, sterr io.Writer, cmmd string, args ...string) *Command {

@@ -1,8 +1,18 @@
 package qbcli
 
+import "github.com/inancgumus/screen"
+
 type Sequencer struct {
-	sequence []QuestionHandler
-	name     string
+	sequence       []QuestionHandler
+	name           string
+	shallClear     bool
+	shallClearEach bool
+}
+
+func (s *Sequencer) Clear(shallClearAfter, shallClearEachTime bool) *Sequencer {
+	s.shallClear = shallClearAfter
+	s.shallClearEach = shallClearEachTime
+	return s
 }
 
 func NewSequencer(name string) *Sequencer {
@@ -34,9 +44,17 @@ func (s *Sequencer) GetOptions() []string {
 func (s *Sequencer) Ask() error {
 	for _, v := range s.sequence {
 		err := v.Ask()
+		if s.shallClearEach {
+			screen.Clear()
+			screen.MoveTopLeft()
+		}
 		if err != nil {
 			return err
 		}
+	}
+	if s.shallClear {
+		screen.Clear()
+		screen.MoveTopLeft()
 	}
 	return nil
 }

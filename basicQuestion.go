@@ -5,13 +5,16 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/inancgumus/screen"
 )
 
 // A basic question. Asks the user something and then calls a
 type Question struct {
-	callback QuestionCallback
-	question string
-	name     string
+	callback   QuestionCallback
+	question   string
+	name       string
+	shallClear bool
 }
 
 func (q *Question) Ask() error {
@@ -24,11 +27,20 @@ func (q *Question) Ask() error {
 		return err
 	}
 	q.callback(answer)
+	if q.shallClear {
+		screen.Clear()
+		screen.MoveTopLeft()
+	}
 	return nil
 }
 
 func NewQuestion(name, question string, callback QuestionCallback) *Question {
 	return &Question{question: question, callback: callback, name: name}
+}
+
+func (q *Question) Clear(shallClear bool) *Question {
+	q.shallClear = shallClear
+	return q
 }
 
 func (q *Question) GetOptions() []string {
